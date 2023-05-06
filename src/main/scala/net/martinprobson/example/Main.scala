@@ -12,7 +12,7 @@ object Main extends ZIOApplication:
     result <- DB.createTable
     _ <- ZIO.logDebug(s"create table result = $result")
     _ <- {
-      val users = Range(1, 100).inclusive.toList
+      val users = Range(1, 200).inclusive.toList
         .map { i => User(UserName(s"User-$i"), Email(s"email-$i")) }
       ZIO.foreachPar(users)(user => UserRegistration.register(user))
     }
@@ -20,16 +20,31 @@ object Main extends ZIOApplication:
     _ <- ZIO.logInfo(s"Complete total of $total registered users")
   yield ()
 
-  override def run: Task[Unit] = program.provide(
+  override def run: Task[Unit] = Db
+
+  /** ZLayers necessary to run the code with an InMemory (Map based) DB.
+    */
+  val InMemory: Task[Unit] = program.provide(
+    UserNotifierLive.layer,
+    InMemoryDBLive.layer,
+    UserModelLive.layer,
+    UserRegistrationLive.layer,
+    EmailServiceLive.layer
+    // ZLayer.Debug.tree
+  )
+
+  /** ZLayers necessary to run the code with a JDBC database (defined in
+    * ApplicationConfig)
+    */
+  val Db: Task[Unit] = program.provide(
     UserNotifierLive.layer,
     ApplicationConfig.layer,
     TransactorLive.layer,
     DBLive.layer,
-    // InMemoryDBLive.layer,
     UserModelLive.layer,
     UserRegistrationLive.layer,
-    EmailServiceLive.layer,
-    ZLayer.Debug.tree
+    EmailServiceLive.layer
+    // ZLayer.Debug.tree
   )
 
 end Main

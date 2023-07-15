@@ -12,7 +12,7 @@ object Main extends ZIOApplication:
     result <- DB.createTable
     _ <- ZIO.logDebug(s"create table result = $result")
     _ <- {
-      val users = Range(1, 200).inclusive.toList
+      val users = Range(1, 2).inclusive.toList
         .map { i => User(UserName(s"User-$i"), Email(s"email-$i")) }
       ZIO.foreachPar(users)(user => UserRegistration.register(user))
     }
@@ -43,8 +43,8 @@ object Main extends ZIOApplication:
     DBLive.layer,
     UserModelLive.layer,
     UserRegistrationLive.layer,
-    EmailServiceLive.layer
-    // ZLayer.Debug.tree
+    EmailServiceLive.layer,
+    ZLayer.Debug.tree
   )
 
 end Main

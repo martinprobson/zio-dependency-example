@@ -2,8 +2,8 @@ package net.martinprobson.example
 
 import zio.*
 import zio.config.*
-import zio.config.magnolia.descriptor
-import zio.config.typesafe.TypesafeConfigSource
+import zio.config.magnolia.deriveConfig
+import zio.config.typesafe.TypesafeConfigProvider
 
 final case class ApplicationConfig(
                          threads: Int,
@@ -13,9 +13,8 @@ final case class ApplicationConfig(
                          password: String
                        )
 
+
 object ApplicationConfig:
-    val layer: ZLayer[Any, ReadError[String], ApplicationConfig] = ZLayer {
-        read {
-            descriptor[ApplicationConfig].from(TypesafeConfigSource.fromResourcePath.at(PropertyTreePath.$("ApplicationConfig")))
-        }
-    }
+      val layer: ZLayer[Any, Config.Error, ApplicationConfig] = ZLayer {
+        TypesafeConfigProvider.fromResourcePath.load(deriveConfig[ApplicationConfig].nested("ApplicationConfig"))
+      }

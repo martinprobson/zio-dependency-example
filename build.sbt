@@ -1,25 +1,25 @@
 ThisBuild / organization := "net.martinprobson.example"
-ThisBuild / scalaVersion := "3.3.0"
+ThisBuild / scalaVersion := "3.3.4"
 
 lazy val root = (project in file(".")).settings(
   name := "zio-dependency-example",
   libraryDependencies ++= Seq(
     // zio
     "dev.zio" %% "zio-interop-cats" % "23.0.03",
-    "dev.zio" %% "zio" % "2.0.15",
+    "dev.zio" %% "zio" % "2.1.13",
     // zio logging
-    "dev.zio" %% "zio-logging" % "2.1.12",
-    "dev.zio" %% "zio-logging-slf4j" % "2.1.12",
+    "dev.zio" %% "zio-logging" % "2.4.0",
+    "dev.zio" %% "zio-logging-slf4j" % "2.4.0",
     // ZIO Config
 //    "dev.zio" %% "zio-config" % "3.0.7",
 //    "dev.zio" %% "zio-config-magnolia" % "3.0.7",
 //    "dev.zio" %% "zio-config-typesafe" % "3.0.7",
-    "dev.zio" %% "zio-config" % "4.0.0-RC12",
-    "dev.zio" %% "zio-config-magnolia" % "4.0.0-RC12",
-    "dev.zio" %% "zio-config-typesafe" % "4.0.0-RC12",
+    "dev.zio" %% "zio-config" % "4.0.2",
+    "dev.zio" %% "zio-config-magnolia" % "4.0.2",
+    "dev.zio" %% "zio-config-typesafe" % "4.0.2",
 // Logging (Cats)
-    "ch.qos.logback" % "logback-classic" % "1.4.7",
-    "ch.qos.logback" % "logback-core" % "1.4.7",
+    "ch.qos.logback" % "logback-classic" % "1.5.12",
+    "ch.qos.logback" % "logback-core" % "1.5.12",
     "org.typelevel" %% "log4cats-slf4j" % "2.5.0",
     // Doobie
     "org.tpolecat" %% "doobie-core" % "1.0.0-RC1",
@@ -28,8 +28,8 @@ lazy val root = (project in file(".")).settings(
     "mysql" % "mysql-connector-java" % "8.0.33",
     "com.h2database" % "h2" % "1.4.200",
     // Testing
-    "dev.zio" %% "zio-test" % "2.0.15" % Test,
-    "dev.zio" %% "zio-test-sbt" % "2.0.15" % Test
+    "dev.zio" %% "zio-test" % "2.1.13" % Test,
+    "dev.zio" %% "zio-test-sbt" % "2.1.13" % Test
   )
 )
 

@@ -28,7 +28,7 @@ object InMemoryDBLive:
   val layer: ULayer[DB] =
     ZLayer {
       for
-        counter <- Ref.make(UNASSIGNED_USER_ID)
+        counter <- Ref.Synchronized.make(UNASSIGNED_USER_ID)
         db <- Ref.make(SortedMap.empty[USER_ID, User])
       yield InMemoryDBLive(db, counter)
     }

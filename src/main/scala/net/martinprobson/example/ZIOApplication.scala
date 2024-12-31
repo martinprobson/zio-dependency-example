@@ -10,14 +10,6 @@ trait ZIOApplication extends ZIOAppDefault {
   /** Define our own log format to be passed to slf4j logger, that includes the
     * fiber id.
     */
-  // private val logFormat: LogFormat =
-  //  LogFormat.allAnnotations(excludeKeys =
-  //    Set(SLF4J.loggerNameAnnotationKey, SLF4J.logMarkerNameAnnotationKey)
-  //  ) +
-  //    bracketed(LogFormat.fiberId) +
-  //    text(" - ") +
-  //    LogFormat.line +
-  //    LogFormat.cause
   private val logFormat: LogFormat =
     LogFormat.allAnnotations +
       bracketed(LogFormat.fiberId) +
